@@ -485,13 +485,12 @@ cpufreq_fallback:
     return cpu;
 }
 
-static char *find_gpu(int index) {
+static char *get_gpu(int index) {
     // inspired by https://github.com/pciutils/pciutils/edit/master/example.c
     /* it seems that pci_lookup_name needs to be given a buffer, but I can't for the life of my figure out what its for */
     char buffer[BUF_SIZE], *device_class, *gpu = malloc(BUF_SIZE);
     struct pci_access *pacc;
     struct pci_dev *dev;
-    int gpu_index = 0;
     bool found = false;
 
     pacc = pci_alloc();
@@ -500,19 +499,15 @@ static char *find_gpu(int index) {
     dev = pacc->devices;
 
     while(dev != NULL) {
-        pci_fill_info(dev, PCI_FILL_IDENT);
-        device_class = pci_lookup_name(pacc, buffer, sizeof(buffer), PCI_LOOKUP_CLASS, dev->device_class);
-        if(strcmp("VGA compatible controller", device_class) == 0 || strcmp("3D controller", device_class) == 0) {
-            strncpy(gpu, pci_lookup_name(pacc, buffer, sizeof(buffer), PCI_LOOKUP_DEVICE | PCI_LOOKUP_VENDOR, dev->vendor_id, dev->device_id), BUF_SIZE);
-            if(gpu_index == index) {
-                found = true;
-                break;
-            } else {
-                gpu_index++;
-            }
-        }
+      pci_fill_info(dev, PCI_FILL_IDENT | PCI_FILL_BASES | PCI_FILL_CLASS);
+      device_class = pci_lookup_name(pacc, buffer, sizeof(buffer), PCI_LOOKUP_CLASS, dev->device_class);
 
-        dev = dev->next;
+      if(strcmp(device_class, "VGA compatible controller") == 0) {
+        strncpy(gpu, pci_lookup_name(pacc, buffer, sizeof(buffer), PCI_LOOKUP_DEVICE | PCI_LOOKUP_VENDOR, dev->vendor_id, dev->device_id), BUF_SIZE);
+        found = true;
+        break;
+      }
+      dev = dev->next;
     }
 
     if (found == false) *gpu = '\0'; // empty string, so it will not be printed
@@ -531,14 +526,6 @@ static char *find_gpu(int index) {
     truncate_spaces(gpu);
 
     return gpu;
-}
-
-static char *get_gpu1() {
-    return find_gpu(0);
-}
-
-static char *get_gpu2() {
-    return find_gpu(1);
 }
 
 static char *get_memory() {

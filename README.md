@@ -1,6 +1,10 @@
 paleofetch
 ==========
 
+It's fork of `ss7m/paleofetch` with the support for only single GPU.
+The original gpu details-fetching code wasn't working for me. So, I removed unnecessary complexities and made it fetch only single GPU details.
+
+
 A rewrite of [neofetch](https://github.com/dylanaraps/neofetch) in C.
 Currently only supports Linux and Xorg.
 
@@ -74,7 +78,6 @@ which function paleofetch will call display. Current available getter functions 
 * `get_resolution`: Prints your screen resolution
 * `get_terminal`: Prints the name of your current terminal
 * `get_cpu`: Prints the name of your CPU, number of cores, and maximum frequency
-* `get_gpu1`, `get_gpu2`: Print the GPU on your system. If you don't have both integrated graphics and an external GPU, `get_gpu2` will likely be blank
 * `get_gpu`: (Tries to) print your current GPU
 * `get_colors1`, `get_colors2`: Prints the colors of your terminal
 
