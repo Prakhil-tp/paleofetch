@@ -1,5 +1,5 @@
 #include "logos/arch.h"
-#define COLOR "\e[1;36m"
+#define COLOR "\033[1;38;5;183m"
 
 #define CONFIG \
 { \
@@ -10,12 +10,10 @@
     { "Host: ",       get_host,                true  }, \
     { "Kernel: ",     get_kernel,              true  }, \
     { "Uptime: ",     get_uptime,              false }, \
-    SPACER \
     { "Packages: ",   get_packages_pacman,   false }, \
     { "Shell: ",      get_shell,             false }, \
     { "Resolution: ", get_resolution,        false }, \
     { "Terminal: ",   get_terminal,          false }, \
-    SPACER \
     { "CPU: ",        get_cpu,                 true  }, \
     { "GPU: ",        get_gpu,                 true  }, \
     { "Memory: ",     get_memory,              false }, \
@@ -31,12 +29,15 @@
    REMOVE("Dual-Core"), \
    REMOVE("Quad-Core"), \
    REMOVE("Six-Core"), \
+   REMOVE("6-Core Processor"), \
    REMOVE("Eight-Core"), \
-   REMOVE("Core"), \
    REMOVE("CPU"), \
 }
 
 #define GPU_CONFIG \
 { \
     REMOVE("Corporation"), \
+    REMOVE("TU116"), \
+    REMOVE("["), \
+    REMOVE("]"), \
 }
