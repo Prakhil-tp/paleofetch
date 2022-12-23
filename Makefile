@@ -15,3 +15,6 @@ paleofetch: paleofetch.c paleofetch.h config.h
 install: paleofetch
 	mkdir -p $(PREFIX)/bin
 	install ./paleofetch $(PREFIX)/bin/paleofetch
+
+uninstall:
+	rm -f $(PREFIX)/bin/paleofetch

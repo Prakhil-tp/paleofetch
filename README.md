@@ -2,7 +2,7 @@ paleofetch
 ==========
 
 It's fork of `ss7m/paleofetch` with the support for only single GPU.
-The original gpu details-fetching code wasn't working for me. So, I removed unnecessary complexities and made it fetch only single GPU details.
+The original gpu details-fetching code wasn't working for me. Therefore, I removed unnecessary complexities and made it fetch only single GPU details.
 
 
 A rewrite of [neofetch](https://github.com/dylanaraps/neofetch) in C.
@@ -47,6 +47,12 @@ to speed up subsequent calls. To ignore the contents of the cache (and repopulat
 
 The cache file can safely be removed at any time, paleofetch will repopulate it
 if it is absent.
+
+
+Uninstall
+---------
+
+    make uninstall
 
 Configuration
 -------------
